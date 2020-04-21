@@ -221,15 +221,18 @@ canvas.addEventListener('click', function(evt) {
                     */
             if (isInside(scrollPos,myWorld.map[i][j])){
                     if (myWorld.map[i][j].material != 0){
+                        if(myInventory.ordered.indexOf(myWorld.map[i][j].material) == -1){
+                            myInventory.ordered.push(myWorld.map[i][j].material);
+                        }
                         myInventory.storage[myWorld.map[i][j].material].quantity += 1;
                         myWorld.map[i][j] = new Block(j,i,0,BLOCK_SIZE);
-                        myWorld.render();    
+                        myWorld.render();
                     }else{
-                        if(!collisionDetection(myPlayer,myWorld.map[i][j])){
-                        if(myInventory.storage[myInventory.ordered[myInventory.selected-1]].quantity>0){
-                            myWorld.map[i][j] = new Block(j,i,myInventory.selected,BLOCK_SIZE);
-                            myInventory.storage[myInventory.ordered[myInventory.selected-1]].quantity -= 1;
-                        }
+                        if(!collisionDetection(myPlayer,myWorld.map[i][j])){ 
+                            if(myInventory.storage[myInventory.ordered[myInventory.selected-1]].quantity>0){
+                                myWorld.map[i][j] = new Block(j,i,myInventory.selected,BLOCK_SIZE);
+                                myInventory.storage[myInventory.ordered[myInventory.selected-1]].quantity -= 1;
+                            }
                         }
                     }
                 
